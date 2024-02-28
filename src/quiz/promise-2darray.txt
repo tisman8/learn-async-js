@@ -1,1 +1,30 @@
 Explain the code execution based on the order of the messages logged in src/quiz/promise-2darray.txt.
+
+The first log message is "Sum called ..." because that is what happens first inside of the Promise. If we were to print
+out the parameter, we would see that it is the actual array, not the string.
+
+The second log message is "returning from sum" which is after the if/else block. The if/else block is still executing through the
+n^2 for loop, so this message is logged before the resolving message. If this was a synchronous call,
+the second message would have been "resolving ... ".
+
+The third log message is "Sum called ..." because that is what happens first inside of the Promise. However, this time, we are
+calling the sum2DArray method with the parameter of a string.
+
+The fourth log message is "rejecting ..." because after the "Sum called ..." line is executed, the if condition was checked. Since this time
+it was false, the else is executed right away. That's why the "rejecting ..." message is printed before the following.
+
+The fifth log message is "return from sum" because it is the logical next step after printing "rejecting ..." and actually calling
+the reject. Since this is an asynchronous call, the reject is still executing while the current pointer continues to print
+"returning from sum".
+
+The sixth log message is "BAD INPUT: Expected array as input" because we are currently in the reject call. The reject function
+is resolved (not to be confused with the resolve function) faster than the n^2 execution of summing all
+values in the 2d array from the first call. Which is why this reject message is printed before the final sum is printed even though
+the call to the final sum was made first.
+
+The seventh log message is "resolving ...". This is the next line of code to be executed after the n^2 loop has finished
+executing.
+
+The eighth and last log message is "45" which is the sum. This is the next line after the resolving message is printed.
+If there was something else, another call to sum2DArray with a larger valid array for example, those lines would be executing
+after this has finished executing. Since this is the call that took the longest to execute, this is the last message to be printed.
